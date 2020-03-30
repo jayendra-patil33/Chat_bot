@@ -53,6 +53,10 @@ def json_create_green_chilli():
                 f.append(x)
     return(f)         
            
+@app.route('/', methods=['GET'])
+def hello_world():
+    return("helloworld")
+    
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
