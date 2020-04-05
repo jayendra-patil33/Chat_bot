@@ -167,11 +167,12 @@ def makeWebhookResult(req):
                 #"contextOut": [],
                 "source": "price_rice"
               }        
+              
+rice=json_create_rice()
+corriander=json_create_corriander()
+green_chilli=json_create_green_chilli()
 if __name__ == '__main__':
-    global rice, corriander,green_chilli
-    rice=json_create_rice()
-    corriander=json_create_corriander()
-    green_chilli=json_create_green_chilli()
+    
     port = int(os.getenv('PORT', 80))
     
     print ("Starting app on port %d" %(port))
