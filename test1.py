@@ -85,18 +85,24 @@ def makeWebhookResult(req):
             if(x['district']==district):
                 # print(x)
                 b.append(x)
-        minima=b[0]     
-        for x in b:
-            if(x['modal_price']<=minima['modal_price']):
-                minima=x
-        print(minima)    
-        speec= "The price of rice in " +minima['state']+','+minima['district']+" in "+minima['market']+' market'+' of variety '+minima['variety'] + " is " + str(minima['modal_price'])
-        print("Response:")
-        print(speec)
-        return {
-                "fulfillmentText": speec,
-                "source": "price_rice"
-              }
+        if(len(b)==0):
+            return {
+                    "fulfillmentText":"No price to show :(",
+                    "source": "price_rice"
+                }
+        else: 
+            minima=b[0]     
+            for x in b:
+                if(x['modal_price']<=minima['modal_price']):
+                    minima=x
+            print(minima)    
+            speec= "The price of rice in " +minima['state']+','+minima['district']+" in "+minima['market']+' market'+' of variety '+minima['variety'] + " is " + str(minima['modal_price'])
+            print("Response:")
+            print(speec)
+            return {
+                    "fulfillmentText": speec,
+                    "source": "price_rice"
+                }
     elif req.get("queryResult").get("action") == "price_corriander":
         result = req.get("queryResult")
         parameters = result.get("parameters")
@@ -171,6 +177,7 @@ def makeWebhookResult(req):
 rice=json_create_rice()
 corriander=json_create_corriander()
 green_chilli=json_create_green_chilli()
+print(rice)
 if __name__ == '__main__':
     
     port = int(os.getenv('PORT', 80))
