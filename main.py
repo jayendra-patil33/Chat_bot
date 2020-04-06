@@ -9,6 +9,7 @@ changed a comment
 import json
 import os
 from pyowm import OWM
+import json_create
 
 from flask import Flask
 from flask import request
@@ -16,43 +17,13 @@ from flask import make_response
 
 import requests
 
+API_ENDPOINT_RICE= "https://api.data.gov.in/resource/0c05e610-698d-4930-8166-a0893c2d9862?api-key=579b464db66ec23bdd00000121814e6c9881416652f58fd832b30b08&format=json&offset=0&limit=10000"
+API_ENDPOINT_CORRIANDER= "https://api.data.gov.in/resource/56efc412-c026-4640-b106-d4a7f615b025?api-key=579b464db66ec23bdd00000121814e6c9881416652f58fd832b30b08&format=json&offset=0&limit=20000"
+API_ENDPOINT_GREEN_CHILLI = "https://api.data.gov.in/resource/b0f998ff-315e-42ee-b980-0d3af00fb1bc?api-key=579b464db66ec23bdd00000121814e6c9881416652f58fd832b30b08&format=json&offset=0&limit=25000"
+
 # Flask app should start in global layout
 app = Flask(__name__)
- 
-def json_create_rice():
-    API_ENDPOINT = "https://api.data.gov.in/resource/0c05e610-698d-4930-8166-a0893c2d9862?api-key=579b464db66ec23bdd00000121814e6c9881416652f58fd832b30b08&format=json&offset=0&limit=10000"
-    r = requests.get(url = API_ENDPOINT)
-    a=r.json()
-        
-    b=[]
-    for x in a["records"]:
-            if(x['state']=="Maharashtra" ):
-                # print(x)
-                b.append(x)
-    return(b) 
-def json_create_corriander():
-    API_ENDPOINT = "https://api.data.gov.in/resource/56efc412-c026-4640-b106-d4a7f615b025?api-key=579b464db66ec23bdd00000121814e6c9881416652f58fd832b30b08&format=json&offset=0&limit=20000"
-    r = requests.get(url = API_ENDPOINT)
-    c=r.json()
-        
-    d=[]
-    for x in c["records"]:
-            if(x['state']=="Maharashtra" ):
-                # print(x)
-                d.append(x)
-    return(d)     
-def json_create_green_chilli():
-    API_ENDPOINT = "https://api.data.gov.in/resource/b0f998ff-315e-42ee-b980-0d3af00fb1bc?api-key=579b464db66ec23bdd00000121814e6c9881416652f58fd832b30b08&format=json&offset=0&limit=25000"
-    r = requests.get(url = API_ENDPOINT)
-    e=r.json()
-        
-    f=[]
-    for x in e["records"]:
-            if(x['state']=="Maharashtra" ):
-                # print(x)
-                f.append(x)
-    return(f)         
-           
+            
 @app.route('/', methods=['GET'])
 def hello_world():
     return("helloworld")
@@ -174,10 +145,10 @@ def makeWebhookResult(req):
                 "source": "price_rice"
               }        
               
-rice=json_create_rice()
-corriander=json_create_corriander()
-green_chilli=json_create_green_chilli()
-print(rice)
+rice=json_create.json_create(API_ENDPOINT_RICE)
+corriander=json_create.json_create(API_ENDPOINT_CORRIANDER)
+green_chilli=json_create.json_create(API_ENDPOINT_GREEN_CHILLI)
+
 if __name__ == '__main__':
     
     port = int(os.getenv('PORT', 80))
