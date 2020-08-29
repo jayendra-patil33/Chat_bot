@@ -1,7 +1,19 @@
 # Chat_bot
 A chatbot for Farmers
 
-Install heroku cli 
+If you wish to deploy the chatbot on local machine 
+First install all the dependencies
+```
+pip install -r requirements.txt
+```
+then simply run main.py
+```
+python3 main.py
+```
+
+# For deployment on heroku 
+Install heroku cli
+
 cd [PATH]
 git init
 git add * 
